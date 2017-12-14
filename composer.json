@@ -1,0 +1,23 @@
+{
+    "name": "pkpudev/yii2-gridtabularform",
+    "description": "Grid Tabular Form Widget",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","widget","tabular","form"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Zein Miftah",
+            "email": "zmiftah@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": ">=2.0.13",
+        "yiisoft/yii2-bootstrap": "*",
+        "eternicode/bootstrap-datepicker": ">=v1.7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "pkpudev\\widget\\": ""
+        }
+    }
+}
