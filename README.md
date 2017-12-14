@@ -1,6 +1,6 @@
-Grid Tabular Form Widget
+Tabular Form Widget
 ========================
-Grid Tabular Form Widget
+Tabular Form Widget
 
 Installation
 ------------
@@ -10,13 +10,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist pkpudev/yii2-gridtabularform "*"
+php composer.phar require --prefer-dist pkpudev/yii2-tabularform "*"
 ```
 
 or add
 
 ```
-"pkpudev/yii2-gridtabularform": "*"
+"pkpudev/yii2-tabularform": "*"
 ```
 
 to the require section of your `composer.json` file.

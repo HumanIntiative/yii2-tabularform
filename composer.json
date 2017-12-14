@@ -1,5 +1,5 @@
 {
-    "name": "pkpudev/yii2-gridtabularform",
+    "name": "pkpudev/yii2-tabularform",
     "description": "Grid Tabular Form Widget",
     "type": "yii2-extension",
     "keywords": ["yii2","extension","widget","tabular","form"],
