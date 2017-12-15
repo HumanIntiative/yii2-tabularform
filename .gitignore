@@ -1,3 +1,4 @@
 /.phpintel
 /vendor
+/assets/bootstrap-datepicker/js/locales
 composer.lock

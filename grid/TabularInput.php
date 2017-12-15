@@ -2,6 +2,7 @@
 
 namespace pkpudev\widget\grid;
 
+use pkpudev\widget\assets\DatePickerAsset;
 use pkpudev\widget\StandardPanel;
 use yii\bootstrap\ButtonGroup;
 use yii\helpers\ArrayHelper;
@@ -198,6 +199,8 @@ class TabularInput extends \yii\base\Widget
 
   protected function registerScript()
   {
+    DatePickerAsset::register($this->view);
+
     $script = "
     var addTaskRow = addTaskRow || '.{$this->addRowClassName}'
     var btnSave = btnSave || '#{$this->btnSaveClassName}'

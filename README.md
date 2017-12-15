@@ -44,3 +44,12 @@ Once the extension is installed, simply use it in your code by  :
 		...
 	]
 ]); ?>```
+
+DatePicker
+----
+
+Get it here
+
+````
+"eternicode/bootstrap-datepicker": ">=v1.7.0"
+````
