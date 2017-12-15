@@ -1,3 +1,4 @@
+
 var taskList = jQuery(idListName)
 
 jQuery(addTaskRow).on('click', addTaskOnClick)
@@ -11,7 +12,7 @@ function addTaskOnKeyup(e) {
 }
 function addTaskOnClick(e) {
 	var clone  = jQuery('tr:last-child', taskList).clone(withDataAndEvents),
-		num    = clone.children('td:eq(0)').html(),
+		num    = clone.children('td:eq(0)').find('.num').html(),
 		odd    = clone.hasClass('odd'),
 		length = clone.children().length,
 		input  = null
@@ -36,6 +37,9 @@ function addTaskOnClick(e) {
 				'autoclose': 'true'
 			})
 		}
+		if (input.hasClass('txt_number')) {
+			input.on('keydown', validateNumberOnKeydown)
+		}
 	}
 
 	clone.children('td:last-child').find('button'+delTaskRow).removeClass('disabled').removeAttr('disabled')
@@ -46,7 +50,7 @@ function addTaskOnClick(e) {
 	clone.appendTo(taskList)
 }
 function delTaskOnClick(e) {
-	jQuery(this).parents('tr.'+taskRowClone).remove()
+	jQuery(this).parents('tr'+taskRowClone).remove()
 
 	taskList.children('tr').each(function(index){
 		jQuery(this).children('td:eq(0)').find('.num').html(index + 1)

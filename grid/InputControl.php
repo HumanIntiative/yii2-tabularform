@@ -33,7 +33,7 @@ class InputControl extends \yii\base\BaseObject
   /**
    * @var bool required
    */
-  public $required;
+  public $required = false;
   /**
    * @var string title
    */

@@ -2,13 +2,8 @@
 
 namespace pkpudev\widget\assets;
 
-\Yii::setAlias('@grid-assets', __DIR__.'/bootstrap-datepicker');
-
 class DatePickerAsset extends \yii\web\AssetBundle
 {
-	public $sourcePath = '@grid-assets';
-	public $basePath = '@webroot';
-	public $baseUrl = '@web';
 	public $css = [
 		'dist/css/bootstrap-datepicker.css',
 	];
@@ -19,4 +14,13 @@ class DatePickerAsset extends \yii\web\AssetBundle
 		'yii\web\JqueryAsset',
 		'yii\bootstrap\BootstrapAsset',
 	];
+
+	/**
+   * @inheritdoc
+   */
+  public function init()
+  {
+    $this->sourcePath = __DIR__ . '/bootstrap-datepicker';
+    parent::init();
+  }
 }

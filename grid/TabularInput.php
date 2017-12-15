@@ -4,9 +4,10 @@ namespace pkpudev\widget\grid;
 
 use pkpudev\widget\assets\DatePickerAsset;
 use pkpudev\widget\StandardPanel;
+use yii\base\InvalidConfigException;
 use yii\bootstrap\ButtonGroup;
+use yii\bootstrap\Html;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
 
 /**
  * Grid Tabular Form Input
@@ -17,6 +18,10 @@ class TabularInput extends \yii\base\Widget
    * @var string title
    */
   public $title;
+  /**
+   * @var bool is bootstrap form horizontal
+   */
+  public $isHorizontal;
   /**
    * Control per Row
    * @var InputControl[] controls
@@ -91,6 +96,30 @@ class TabularInput extends \yii\base\Widget
    */
   public $cloneWithEvent = 'false';
 
+  public function init()
+  {
+    parent::init();
+
+    // Check controls TODO change to column
+    if (empty($this->controls)) {
+      throw new InvalidConfigException("Property controls is not defined");
+    }
+
+    // Sanitize controls
+    $validControls = [];
+    foreach ($this->controls as $row) {
+      if (is_array($row)) {
+        $control = new InputControl($row);
+      } elseif ($row instanceof InputControl) {
+        $control = $row;
+      } else {
+        throw new InvalidConfigException("One of controls property is not valid");
+      }
+      $validControls[] = $control;
+    }
+    $this->controls = $validControls;
+  }
+
   public function run()
   {
     $this->registerScript();
@@ -99,7 +128,18 @@ class TabularInput extends \yii\base\Widget
 
   protected function createWidget()
   {
-    echo StandardPanel::begin(['title'=>$this->title]); ?>
+    ?>
+    <div class="form-group">
+      <?= Html::label($this->title, null, ['class'=>'control-label']) ?>
+      <?php $this->createGrid() ?>
+      <!-- Error Block -->
+    </div>
+    <?php
+  }
+
+  protected function createGrid()
+  {
+    ?>
     <table class="table table-condensed table-bordered">
       <thead>
         <tr class="filters">
@@ -118,7 +158,7 @@ class TabularInput extends \yii\base\Widget
         <?php $this->buildRow($num, $class, []); ?>
       </tbody>
     </table>
-    <?= StandardPanel::end();
+    <?php
   }
 
   protected function buildRow($index, $classOddEven, $paramData)
@@ -150,12 +190,19 @@ class TabularInput extends \yii\base\Widget
           [
             'label'=>'<i class="fa fa-plus"></i>',
             'encodeLabel'=>false,
-            'options'=>['class'=>$this->addRowClassName]
+            'options'=>[
+              'class'=>"{$this->addRowClassName} btn-sm",
+              'type'=>'button',
+            ]
           ],
           [
             'label'=>'<i class="fa fa-remove"></i>',
             'encodeLabel'=>false,
-            'options'=>['class'=>$this->delRowClassName]
+            'options'=>[
+              'class'=>"{$this->delRowClassName} btn-sm",
+              'type'=>'button',
+              'disabled'=>true,
+            ]
           ],
         ]]); ?>
       </td>
@@ -167,7 +214,8 @@ class TabularInput extends \yii\base\Widget
   {
     $name = "{$this->modelClassName}[{$control->name}][]";
     $value = $paramData[$control->name];
-    $class = 'form-control ' . ($control->type == InputControl::DATE_INPUT) ? $this->calendarClassName : null;
+    $class = 'form-control input-sm ' .
+      ($control->type == InputControl::DATE_INPUT ? $this->calendarClassName : null);
     $class = ($control->required) ? "{$class} {$this->requiredClassName} " : $class;
     $class = ($control->htmlOptions && ($cls = $control->htmlOptions['class'])) ? "$class $cls" : $class;
     $htmlOptions = ArrayHelper::merge($control->htmlOptions, [
@@ -184,12 +232,12 @@ class TabularInput extends \yii\base\Widget
     <?= $control->preContent ?>
     <?php if ($control->type == InputControl::DATE_INPUT): ?>
       <div class="input-group">
-        <?= Html::textInput($name, $value, $htmlOptions); ?>
         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+        <?= Html::textInput($name, $value, $htmlOptions); ?>
       </div>
     <?php elseif ($control->type == InputControl::NUMBER_INPUT): ?>
       <?= Html::textInput($name, $value, ArrayHelper::merge($htmlOptions, [
-        'class'=>'text-right txt_number',
+        'class'=>"{$class} text-right txt_number",
       ])); ?>
     <?php else: ?>
       <?= call_user_func_array(['Html', $control->type], $options)?>
@@ -205,7 +253,7 @@ class TabularInput extends \yii\base\Widget
     var addTaskRow = addTaskRow || '.{$this->addRowClassName}'
     var btnSave = btnSave || '#{$this->btnSaveClassName}'
     var calendarClassName = calendarClassName || '.{$this->calendarClassName}'
-    var calendarTask = calendarTask || '.{$this->calendarClassName}'
+    var calendarTask = calendarTask || '{$this->calendarClassName}'
     var delTaskRow = delTaskRow || '.{$this->delRowClassName}'
     var formName = formName || '#{$this->formName}'
     var idListName = idListName || '#{$this->idListName}'
@@ -214,7 +262,7 @@ class TabularInput extends \yii\base\Widget
     var titleName = titleName || '.{$this->titleClassName}'
     var useCalendar = useCalendar || {$this->useCalendar}
     var withDataAndEvents = withDataAndEvents || {$this->cloneWithEvent}";
-    $script .= file_get_contents(__DIR__.'/../assets/script.js');
+    $script .= file_get_contents(__DIR__.'/../assets/grid-tabular-input.js');
 
     $rand = date('YmdHis');
     $view = $this->view;

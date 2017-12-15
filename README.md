@@ -43,7 +43,8 @@ Once the extension is installed, simply use it in your code by  :
 		['id'=>1, 'parent_id'=>0, 'field_name1'=>null, 'field_name2'=>null, 'field_name3'=>null],
 		...
 	]
-]); ?>```
+]); ?>
+```
 
 DatePicker
 ----
