@@ -240,7 +240,7 @@ class TabularInput extends \yii\base\Widget
         'class'=>"{$class} text-right txt_number",
       ])); ?>
     <?php else: ?>
-      <?= call_user_func_array(['Html', $control->type], $options)?>
+      <?= call_user_func_array(['yii\bootstrap\Html', $control->type], $options)?>
     <?php endif; ?>
     <?= $control->postContent;
   }
