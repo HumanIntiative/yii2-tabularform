@@ -8,7 +8,6 @@ jQuery('.txt_number').on('keydown', validateNumberOnKeydown)
 
 if (withCheckbox) {
     jQuery(allCheckboxId).on('change', allCheckboxOnChange)
-    jQuery(checkboxesClass).on('change', oneCheckboxOnChange)
 }
 
 function addTaskOnKeyup(e) {
@@ -91,9 +90,6 @@ function validateNumberOnKeydown(e) {
 // Checkboxes
 function allCheckboxOnChange(e) {
     jQuery(checkboxesClass).attr('checked', this.checked)
-}
-function oneCheckboxOnChange(e) {
-    console.log(this)
 }
 
 // Intiate datePicker
