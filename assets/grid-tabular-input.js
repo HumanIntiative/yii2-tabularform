@@ -6,6 +6,11 @@ jQuery(delTaskRow).on('click', delTaskOnClick)
 jQuery(btnSave).on('click', btnSaveOnClick)
 jQuery('.txt_number').on('keydown', validateNumberOnKeydown)
 
+if (withCheckbox) {
+    jQuery(allCheckboxId).on('change', allCheckboxOnChange)
+    jQuery(checkboxesClass).on('change', oneCheckboxOnChange)
+}
+
 function addTaskOnKeyup(e) {
 	e.preventDefault()
 	if (e.keyCode==13) addTaskOnClick(e)
@@ -81,6 +86,14 @@ function validateNumberOnKeydown(e) {
     e.keyCode == 37 || // e.key=ArrowLeft
     e.keyCode == 39 || // e.key=ArrowRight
     jQuery.isNumeric(newVal)
+}
+
+// Checkboxes
+function allCheckboxOnChange(e) {
+    jQuery(checkboxesClass).attr('checked', this.checked)
+}
+function oneCheckboxOnChange(e) {
+    console.log(this)
 }
 
 // Intiate datePicker
