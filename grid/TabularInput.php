@@ -293,7 +293,7 @@ class TabularInput extends \yii\base\Widget
                 <?= Html::textInput($name, $value, $htmlOptions); ?>
             </div>
         <?php elseif ($control->type == InputControl::NUMBER_INPUT): ?>
-            <?php $value = number_format($value, 0, ',', '.'); ?>
+            <?php //Potential Bugfix $value = number_format($value, 0, ',', '.'); ?>
             <?= Html::textInput($name, $value, ArrayHelper::merge($htmlOptions, [
                 'class'=>"{$class} text-right txt_number",
             ])); ?>
